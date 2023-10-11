@@ -1,7 +1,8 @@
 package main
 
 import (
-	"log"
+	"errors"
+	"fmt"
 	"os"
 )
 
@@ -19,10 +20,14 @@ func (q *Query) Error() string {
 }
 
 func main() {
+
+	var q *Query
 	_, err := openFile1("test.txt", "root")
 	if err != nil {
-		log.Println(err)
-		return
+		//log.Println(err)
+		if errors.As(err, &q) {
+			fmt.Println("custom error found in chain ", q.path)
+		}
 	}
 }
 
